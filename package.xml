@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+    <name>recapture</name>
+    <version>1.0.0</version>
+    <stability>stable</stability>
+    <license>OSL</license>
+    <channel>community</channel>
+    <extends/>
+    <summary>Free analytics dashboard for abandoned carts. Set up automated cart recovery email campaigns in minutes.</summary>
+    <description>Free analytics dashboard for abandoned carts. Set up automated cart recovery email campaigns in minutes.</description>
+    <notes>Initial production release</notes>
+    <authors><author><name>David Webber</name><user>Adstream</user><email>david@adstreaminc.com</email></author></authors>
+    <date>2015-07-09</date>
+    <time>22:53:31</time>
+    <contents><target name="magelocal"><dir name="Recapture"><dir name="Connector"><dir name="Block"><dir name="Adminhtml"><dir name="System"><dir name="Config"><file name="Authenticate.php" hash="b4def4c279d801f7e9c327d8ee87c414"/><file name="Key.php" hash="f95c74992894b0a823793ef605c103e1"/><file name="Status.php" hash="003133a47fb37e6f522314778eec9632"/></dir></dir></dir></dir><dir name="controllers"><dir name="Adminhtml"><file name="AuthenticateController.php" hash="1c5ad4701f9fc353c1f387212ea0c0c5"/></dir><file name="ExportController.php" hash="6da6668ecd201d5dbc627b831c3b37ba"/></dir><dir name="etc"><file name="config.xml" hash="76f5b73047cb0efbec06b847f55a0d00"/><file name="system.xml" hash="45be095b48cbb0c6f24003d5db492e71"/></dir><dir name="Helper"><file name="Data.php" hash="a20da6edda255919ade055203ac459ac"/><file name="Transport.php" hash="a13bf58b13e207f5260fe2bdbe86fb5e"/></dir><dir name="Model"><file name="Observer.php" hash="3dbcbfc25944aedb3cc6658c495bb70b"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Recapture_Connector.xml" hash="e8fea9dc4237af6b34219c7f52bd02d8"/></dir></target></contents>
+    <compatible/>
+    <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php></required></dependencies>
+</package>

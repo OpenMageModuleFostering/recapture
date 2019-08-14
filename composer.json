@@ -1,0 +1,16 @@
+{
+    "name": "OpenMageModuleFostering/recapture",
+    "type": "magento-module",
+    "license": "OSL",
+    "homepage": "",
+    "description": "Free analytics dashboard for abandoned carts. Set up automated cart recovery email campaigns in minutes.",
+    "authors": [
+    {
+        "name": "David Webber",
+        "email": "david@adstreaminc.com"
+    }
+],
+    "suggest": {
+        "magento-hackathon/magento-composer-installer": "*"
+    }
+}

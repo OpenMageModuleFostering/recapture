@@ -1,0 +1,114 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Recapture_Connector>
+            <version>0.1.0</version>
+        </Recapture_Connector>
+    </modules>
+
+    <global>
+    
+        <blocks>
+            <recapture>
+                <class>Recapture_Connector_Block</class>
+            </recapture>
+        </blocks>
+    
+        <helpers>
+            <recapture>
+                <class>Recapture_Connector_Helper</class>
+            </recapture>
+        </helpers>
+        
+        <events>
+        
+            <sales_quote_save_after>
+                <observers>
+                    <recapture_cart_update>
+                        <type>singleton</type>
+                        <class>Recapture_Connector_Model_Observer</class>
+                        <method>quoteUpdate</method>
+                    </recapture_cart_update>
+                </observers>
+            </sales_quote_save_after>
+            
+            <sales_quote_delete_after>
+                <observers>
+                    <recapture_cart_update>
+                        <type>singleton</type>
+                        <class>Recapture_Connector_Model_Observer</class>
+                        <method>quoteDelete</method>
+                    </recapture_cart_update>
+                </observers>
+            </sales_quote_delete_after>
+            
+            <sales_order_place_after>
+                <observers>
+                    <recapture_cart_conversion>
+                        <type>singleton</type>
+                        <class>Recapture_Connector_Model_Observer</class>
+                        <method>cartConversion</method>
+                    </recapture_cart_conversion>
+                </observers>
+            </sales_order_place_after>
+        </events>
+        
+    </global>
+
+    <frontend>
+        <routers>
+            <recapture>
+                <use>standard</use>
+                <args>
+                    <module>Recapture_Connector</module>
+                    <frontName>recapture</frontName>
+                </args>
+            </recapture>
+        </routers>
+        <layout>
+            <updates>
+                <recapture>
+                    <file>recapture.xml</file>
+                </recapture>
+            </updates>
+        </layout>
+    </frontend>
+    
+    <admin>
+         <routers>
+             <recapture_admin>
+                 <use>admin</use>
+                 <args>
+                     <module>Recapture_Connector_Adminhtml</module>
+                     <frontName>recapture_admin</frontName>
+                 </args>
+             </recapture_admin>
+         </routers>
+    </admin>
+    
+    <adminhtml>
+        <acl>
+            <resources>
+                <all>
+                    <title>Allow Everything</title>
+                </all>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <recapture>
+                                            <title>Recapture Connector - All</title>
+                                        </recapture>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+    </adminhtml>
+
+</config>
