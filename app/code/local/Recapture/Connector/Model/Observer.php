@@ -4,48 +4,48 @@ class Recapture_Connector_Model_Observer {
     
     public function itemUpdate($observer){
         
+        if (!Mage::helper('recapture')->isEnabled()) return $this;
+        
         try {
         
-            $result = $this->_updateQuote($observer->getEvent()->getQuoteItem()->getQuote());
+            $this->_updateQuote($observer->getEvent()->getQuoteItem()->getQuote());
             
         } catch (Exception $e){
             
-            Mage::log($e, null, 'recapture.log');
+            Mage::log($e->getMessage());
             
         }
         
-        return $result;
+        return $this;
         
     }
     
     public function quoteUpdate($observer){
         
+        if (!Mage::helper('recapture')->isEnabled()) return $this;
+        
         try {
         
-            $result = $this->_updateQuote($observer->getEvent()->getQuote());
+            $this->_updateQuote($observer->getEvent()->getQuote());
             
         } catch (Exception $e){
             
-            Mage::log($e, null, 'recapture.log');
+            Mage::log($e->getMessage());
             
         }
         
-        return $result;
+        return $this;
         
     }
     
     protected function _updateQuote(Mage_Sales_Model_Quote $quote){
-        
-        if (!Mage::helper('recapture')->isEnabled()) return $this;
         
         if (!$quote->getId()) return;
         
         //sales_quote_save_before gets called like 5 times on some page loads, we don't want to do 5 updates per page load
         if (Mage::registry('recapture_has_posted')) return;
         
-        Mage::register('recapture_has_posted', true);
-        
-        $quote->collectTotals();
+        Mage::register('recapture_has_posted', true, true);
         
         $mediaConfig = Mage::getModel('catalog/product_media_config');
         $storeId     = Mage::app()->getStore();
@@ -155,9 +155,9 @@ class Recapture_Connector_Model_Observer {
 
     public function quoteDelete($observer){
         
-        try {
+        if (!Mage::helper('recapture')->isEnabled()) return $this;
         
-            if (!Mage::helper('recapture')->isEnabled()) return $this;
+        try {
             
             $quote = $observer->getEvent()->getQuote();
             
@@ -169,7 +169,7 @@ class Recapture_Connector_Model_Observer {
             
         } catch (Exception $e){
             
-            Mage::log($e, null, 'recapture.log');
+            Mage::log($e->getMessage());
             
         }
             
@@ -179,9 +179,9 @@ class Recapture_Connector_Model_Observer {
     
     public function cartConversion($observer){
         
-        try {
+        if (!Mage::helper('recapture')->isEnabled()) return $this;
         
-            if (!Mage::helper('recapture')->isEnabled()) return $this;
+        try {
             
             $order = $observer->getEvent()->getOrder();
             
@@ -193,7 +193,7 @@ class Recapture_Connector_Model_Observer {
             
         } catch (Exception $e){
             
-            Mage::log($e, null, 'recapture.log');
+            Mage::log($e->getMessage());
             
         }
         
@@ -203,10 +203,10 @@ class Recapture_Connector_Model_Observer {
     
     public function newsletterSubscriber($observer){
         
+        if (!Mage::helper('recapture')->isEnabled()) return $this;
+        if (!Mage::helper('recapture')->shouldCaptureSubscriber()) return $this;
+        
         try {
-            
-            if (!Mage::helper('recapture')->isEnabled()) return $this;
-            if (!Mage::helper('recapture')->shouldCaptureSubscriber()) return $this;
             
             $subscriber = $observer->getEvent()->getSubscriber();
             $email = $subscriber->getSubscriberEmail();
@@ -220,7 +220,7 @@ class Recapture_Connector_Model_Observer {
             
         } catch (Exception $e){
             
-            Mage::log($e, null, 'recapture.log');
+            Mage::log($e->getMessage());
             
         }
         
