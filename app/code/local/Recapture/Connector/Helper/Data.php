@@ -16,6 +16,15 @@ class Recapture_Connector_Helper_Data extends Mage_Core_Helper_Abstract {
         
     }
     
+    public function getHomeUrl($path){
+        
+        $baseUrl = Mage::getStoreConfig('recapture/configuration/dev_base_url');
+        if (!$baseUrl) $baseUrl = 'http://www.recapture.io/';
+        
+        return $baseUrl . $path;
+        
+    }
+    
     public function canTrackEmail(){
         
         return Mage::getStoreConfig('recapture/abandoned_carts/track_email');
@@ -213,6 +222,32 @@ class Recapture_Connector_Helper_Data extends Mage_Core_Helper_Abstract {
         }
         
         return null;
+        
+    }
+    
+    
+    public function getCustomerHash(){
+        
+        return isset($_COOKIE['ra_customer_id']) ? $_COOKIE['ra_customer_id'] : null;
+        
+    }
+    
+    
+    public function translateEmailHashes($hashes = array()){
+        
+        if (empty($hashes)) return false;
+        
+        $result = Mage::helper('recapture/transport')->dispatch('email/retrieve', array(
+            'hashes' => $hashes
+        ));
+        
+        $body = @json_decode($result->getBody());
+        
+        if ($body->status == 'success'){
+            
+            return $body->data->emails;
+            
+        } else return false;
         
     }
     

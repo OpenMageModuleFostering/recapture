@@ -8,12 +8,12 @@ class Recapture_Connector_Helper_Transport extends Mage_Core_Helper_Abstract {
         if (empty($route)) return false;
         
         $adapter = new Zend_Http_Client_Adapter_Curl();
-        $client  = new Zend_Http_Client('http://www.recapture.io/beacon/' . $route, array(
+        $client  = new Zend_Http_Client(Mage::helper('recapture')->getHomeUrl('beacon/' . $route), array(
             'timeout' => 1
         ));
         
         //this is the users publicly accessible session ID
-        $data['session'] = Mage::getSingleton('core/session')->getEncryptedSessionId();
+        $data['customer'] = Mage::helper('recapture')->getCustomerHash();
         
         $client->setParameterPost($data);
         $client->setAdapter($adapter);

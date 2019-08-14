@@ -1,0 +1,9 @@
+<?php if ($this->shouldTrack()){ ?>
+    <script type="text/javascript" src="<?php echo $this->getQueueUrl() ?>"></script>
+    <script>
+        ra('init', ['<?php echo $this->getApiKey() ?>']);
+        ra('product', [{
+            sku: '<?php echo Mage::registry('current_product')->getSku() ?>'
+        }]);
+    </script>
+<?php } ?>

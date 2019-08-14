@@ -3,8 +3,18 @@
     
     <default>
         <reference name="before_body_end">
-            <block type="recapture/client" template="recapture/client.phtml" />
+            <block type="recapture/client_page" name="recapture.client" template="recapture/client/page.phtml">
+                <action method="setCacheLifetime" />
+            </block>
         </reference>
     </default>
+    
+    <catalog_product_view>
+        <reference name="before_body_end">
+            <reference name="recapture.client">
+                <action method="setTemplate"><template>recapture/client/product.phtml</template></action>
+            </reference>
+        </reference>
+    </catalog_product_view>
     
 </layout>

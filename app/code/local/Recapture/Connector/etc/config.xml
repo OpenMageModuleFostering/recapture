@@ -2,32 +2,32 @@
 <config>
     <modules>
         <Recapture_Connector>
-            <version>1.1.6</version>
+            <version>1.2.0</version>
         </Recapture_Connector>
     </modules>
 
     <global>
-    
+
         <blocks>
             <recapture>
                 <class>Recapture_Connector_Block</class>
             </recapture>
         </blocks>
-    
+
         <helpers>
             <recapture>
                 <class>Recapture_Connector_Helper</class>
             </recapture>
         </helpers>
-        
+
         <models>
             <recapture>
                 <class>Recapture_Connector_Model</class>
             </recapture>
         </models>
-        
+
         <events>
-        
+
             <sales_quote_save_after>
                 <observers>
                     <recapture_cart_update>
@@ -37,7 +37,7 @@
                     </recapture_cart_update>
                 </observers>
             </sales_quote_save_after>
-            
+
             <sales_quote_delete_after>
                 <observers>
                     <recapture_cart_update>
@@ -47,7 +47,7 @@
                     </recapture_cart_update>
                 </observers>
             </sales_quote_delete_after>
-            
+
             <sales_order_place_after>
                 <observers>
                     <recapture_cart_conversion>
@@ -57,8 +57,8 @@
                     </recapture_cart_conversion>
                 </observers>
             </sales_order_place_after>
-            
-            <newsletter_subscriber_save_after>
+
+            <newsletter_subscriber_save_before>
                 <observers>
                     <recapture_cart_subscriber>
                         <type>singleton</type>
@@ -66,10 +66,10 @@
                         <method>newsletterSubscriber</method>
                     </recapture_cart_subscriber>
                 </observers>
-            </newsletter_subscriber_save_after>
-            
+            </newsletter_subscriber_save_before>
+
         </events>
-        
+
     </global>
 
     <frontend>
@@ -90,7 +90,7 @@
             </updates>
         </layout>
     </frontend>
-    
+
     <admin>
          <routers>
              <adminhtml>
@@ -102,7 +102,7 @@
              </adminhtml>
          </routers>
     </admin>
-    
+
     <adminhtml>
         <acl>
             <resources>
@@ -127,7 +127,7 @@
             </resources>
         </acl>
     </adminhtml>
-    
+
     <default>
         <recapture>
             <abandoned_carts>
@@ -136,5 +136,5 @@
             </abandoned_carts>
         </recapture>
     </default>
-    
+
 </config>

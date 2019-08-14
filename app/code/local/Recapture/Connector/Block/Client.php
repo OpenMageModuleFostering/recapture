@@ -7,13 +7,18 @@ class Recapture_Connector_Block_Client extends Mage_Core_Block_Template {
     public function shouldTrack(){
         
         if (!Mage::helper('recapture')->isEnabled()) return false;
-        if (!Mage::helper('recapture')->canTrackEmail()) return false;
         
         $apiKey = $this->getApiKey();
         if (empty($apiKey)) return false;
         
-        $cartId = $this->getCartId();
-        if (empty($cartId)) return false;
+        return true;
+        
+    }
+    
+    public function shouldTrackEmail(){
+        
+        if (!$this->shouldTrack()) return false;
+        if (!Mage::helper('recapture')->canTrackEmail()) return false;
         
         return true;
         
@@ -25,16 +30,15 @@ class Recapture_Connector_Block_Client extends Mage_Core_Block_Template {
         
     }
     
-    public function getCartId(){
+    public function getQueueUrl(){
         
-        if (empty($this->_cartId)){
+        $queueUrl = Mage::getStoreConfig('recapture/configuration/dev_queue_url');
+        if (!$queueUrl) $queueUrl = '//cdn.recapture.io/sdk/v1/ra-queue.min.js';
         
-            $cart = Mage::getModel('checkout/cart')->getQuote();
-            $this->_cartId = $cart->getId();
-            
-        }
+        //append a timestamp that changes every 10 minutes
+        $queueUrl .= '?v=' . round(time() / (60 * 10));
         
-        return $this->_cartId;
+        return $queueUrl;
         
     }
     

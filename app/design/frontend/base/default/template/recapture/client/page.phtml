@@ -1,0 +1,10 @@
+<?php if ($this->shouldTrack()){ ?>
+    <script type="text/javascript" src="<?php echo $this->getQueueUrl() ?>"></script>
+    <script type="text/javascript">
+        ra('init', ['<?php echo $this->getApiKey() ?>']);
+        ra('page');
+        <?php if ($this->shouldTrackEmail()){ ?>
+        ra('email');
+        <?php } ?>
+    </script>
+<?php } ?>
