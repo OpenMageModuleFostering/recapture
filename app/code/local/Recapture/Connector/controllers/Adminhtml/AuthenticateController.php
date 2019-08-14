@@ -6,7 +6,7 @@ class Recapture_Connector_Adminhtml_AuthenticateController extends Mage_Adminhtm
         
         $query = http_build_query(array(
             'return'    => Mage::helper('adminhtml')->getUrl('recapture_admin/authenticate/return'),
-            'recapture' => Mage::getUrl('recapture/cart/index')
+            'recapture' => Mage::getUrl('recapture/cart/index', array('hash' => 'CART_HASH'))
         ));
         
         $authenticateUrl = 'http://recapture.io/account/auth?' . $query;
