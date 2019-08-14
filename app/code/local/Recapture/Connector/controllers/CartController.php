@@ -45,15 +45,28 @@ class Recapture_Connector_CartController extends Mage_Core_Controller_Front_Acti
             
             $cart = Mage::getModel('checkout/cart')->getQuote();
             
-            if ($cart->getItemsCount() > 0){
+            $redirectSection = $helper->getReturnLanding();
+            
+            switch ($redirectSection){
+                    
+                case Recapture_Connector_Model_Landing::REDIRECT_HOME:
+                    
+                    return $this->_redirect('/');
                 
-                return $this->_redirect('checkout/cart');
+                case Recapture_Connector_Model_Landing::REDIRECT_CHECKOUT:
+                    
+                    return $this->getResponse()->setRedirect(Mage::helper('checkout/url')->getCheckoutUrl());
+                    
+                case Recapture_Connector_Model_Landing::REDIRECT_CART:
+                default:
                 
-            } else {
-                
-                return $this->_redirect('/');
+                    return $this->_redirect('checkout/cart');
                 
             }
+            
+            return $this->_redirect('/');
+            
+            
             
         }
         

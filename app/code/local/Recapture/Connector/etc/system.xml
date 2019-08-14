@@ -17,9 +17,9 @@
  
             <groups>
                 <configuration translate="label" module="recapture">
-                    <label>Configuration</label>
+                    <label>Authentication</label>
                     <frontend_type>text</frontend_type>
-                    <sort_order>1000</sort_order>
+                    <sort_order>10</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
@@ -61,17 +61,37 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                         </api_key>
+                    </fields>
+                </configuration>
+                <abandoned_carts translate="label" module="recapture">
+                    <label>Abandoned Carts Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+ 
+                    <fields>
                         <track_email translate="label">
                             <label>Enable Pre-submit Email Capturing</label>
                             <frontend_type>select</frontend_type>
-                            <sort_order>30</sort_order>
+                            <sort_order>10</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                         </track_email>
+                        <return_landing translate="label">
+                            <label>Click Through Landing</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <source_model>recapture/landing</source_model>
+                        </return_landing>
                     </fields>
-                </configuration>
+                </abandoned_carts>
             </groups>
         </recapture>
     </sections>

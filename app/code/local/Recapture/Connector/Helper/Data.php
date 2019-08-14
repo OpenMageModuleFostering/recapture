@@ -12,8 +12,14 @@ class Recapture_Connector_Helper_Data extends Mage_Core_Helper_Abstract {
     
     public function canTrackEmail(){
         
-        return Mage::getStoreConfig('recapture/configuration/track_email');
+        return Mage::getStoreConfig('recapture/abandoned_carts/track_email');
         
+    }
+    
+    public function getReturnLanding(){
+    
+        return Mage::getStoreConfig('recapture/abandoned_carts/return_landing');
+    
     }
     
     public function getApiKey(){
