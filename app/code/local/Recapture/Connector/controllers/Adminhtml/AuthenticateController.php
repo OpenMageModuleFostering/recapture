@@ -45,7 +45,7 @@ class Recapture_Connector_Adminhtml_AuthenticateController extends Mage_Adminhtm
             $config = new Mage_Core_Model_Config();
             $config->saveConfig('recapture/configuration/authenticated', true, $scope, $scopeId);
             $config->saveConfig('recapture/configuration/api_key', $apiKey, $scope, $scopeId);
-            $config->saveConfig('recapture/configuration/status', true, $scope, $scopeId);
+            $config->saveConfig('recapture/configuration/enabled', true, $scope, $scopeId);
             
             Mage::getSingleton('adminhtml/session')->addSuccess('Your account has been authenticated successfully!'); 
             
