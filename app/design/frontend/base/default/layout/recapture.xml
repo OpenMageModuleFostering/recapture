@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    
+    <default>
+        <reference name="before_body_end">
+            <block type="recapture/client" template="recapture/client.phtml" />
+        </reference>
+    </default>
+    
+</layout>

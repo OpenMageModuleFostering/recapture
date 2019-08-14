@@ -1,0 +1,8 @@
+<?php if ($this->shouldTrack()){ ?>
+
+    <script type="text/javascript" src="//cdn.recapture.io/loader.min.js"></script>
+    <script>
+        recapture.init('<?php echo $this->getApiKey() ?>', '<?php echo $this->getCartId() ?>', {autoDetectEmail: true});
+    </script>
+
+<?php } ?>
