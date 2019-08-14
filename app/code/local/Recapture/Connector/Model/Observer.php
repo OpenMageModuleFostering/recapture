@@ -25,13 +25,15 @@ class Recapture_Connector_Model_Observer {
         
         Mage::register('recapture_has_posted', true);
         
+        $quote->collectTotals();
+        
         $mediaConfig = Mage::getModel('catalog/product_media_config');
         $storeId     = Mage::app()->getStore();
         
         $transportData = array(
-            'first_name'   => $quote->getCustomerFirstname(),
-            'last_name'    => $quote->getCustomerLastname(),
-            'email'        => $quote->getCustomerEmail(),
+            'first_name'   => Mage::helper('recapture')->getCustomerFirstname($quote),
+            'last_name'    => Mage::helper('recapture')->getCustomerLastname($quote),
+            'email'        => Mage::helper('recapture')->getCustomerEmail($quote),
             'external_id'  => $quote->getId(),
             'grand_total'  => $quote->getGrandTotal(),
             'products'     => array(),
@@ -44,7 +46,10 @@ class Recapture_Connector_Model_Observer {
             
             $productModel = $item->getProduct();
             
-            $productImage = (string)Mage::helper('catalog/image')->init($productModel, 'thumbnail');
+            $productImage = false;
+            
+            $image = Mage::getResourceModel('catalog/product')->getAttributeRawValue($productModel->getId(), 'thumbnail', $storeId);
+            if ($image && $image != 'no_selection') $productImage = $mediaConfig->getMediaUrl($image);
             
             //check configurable first
             if ($item->getProductType() == 'configurable'){
@@ -54,8 +59,7 @@ class Recapture_Connector_Model_Observer {
                     $child = $productModel->getIdBySku($item->getSku());
                     
                     $image = Mage::getResourceModel('catalog/product')->getAttributeRawValue($child, 'thumbnail', $storeId);
-                    
-                    if ($image) $productImage = $mediaConfig->getMediaUrl($image);
+                    if ($image && $image != 'no_selection') $productImage = $mediaConfig->getMediaUrl($image);
                     
                 }
             }
@@ -70,9 +74,16 @@ class Recapture_Connector_Model_Observer {
                     $parent = $options['super_product_config']['product_id'];
                     $image = Mage::getResourceModel('catalog/product')->getAttributeRawValue($parent, 'thumbnail', $storeId);
                     
-                    $productImage = $mediaConfig->getMediaUrl($image);
+                    if ($image && $image != 'no_selection') $productImage = $mediaConfig->getMediaUrl($image);
                     
                 }
+            }
+            
+            //if after all that, we still don't have a product image, we get the placeholder image
+            if (!$productImage) {
+                
+                $productImage = $mediaConfig->getMediaUrl('placeholder/' . Mage::getStoreConfig("catalog/placeholder/image_placeholder"));
+                
             }
             
             $optionsHelper = Mage::helper('catalog/product_configuration');

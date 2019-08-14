@@ -6,7 +6,7 @@ class Recapture_Connector_Adminhtml_AuthenticateController extends Mage_Adminhtm
         
         if (Mage::helper('recapture')->getCurrentScope() == 'default'){
             
-            Mage::getSingleton('adminhtml/session')->addError('You cannot authenticate the Default Config scope. Please select a Website or Store View from the scope dropdown on the left before authenticating.'); 
+            Mage::getSingleton('adminhtml/session')->addError('You cannot authenticate the Default Config scope. Please change the Current Configuration Scope on the left to a specific website before authenticating.');
             
             return $this->_redirect('adminhtml/system_config/edit', array('section' => 'recapture'));
             
@@ -46,6 +46,8 @@ class Recapture_Connector_Adminhtml_AuthenticateController extends Mage_Adminhtm
             $config->saveConfig('recapture/configuration/authenticated', true, $scope, $scopeId);
             $config->saveConfig('recapture/configuration/api_key', $apiKey, $scope, $scopeId);
             $config->saveConfig('recapture/configuration/enabled', true, $scope, $scopeId);
+            
+            Mage::app()->getCacheInstance()->cleanType('config');
             
             Mage::getSingleton('adminhtml/session')->addSuccess('Your account has been authenticated successfully!'); 
             

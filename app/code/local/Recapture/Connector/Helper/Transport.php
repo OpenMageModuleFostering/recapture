@@ -12,6 +12,9 @@ class Recapture_Connector_Helper_Transport extends Mage_Core_Helper_Abstract {
             'timeout' => 1
         ));
         
+        //this is the users publicly accessible session ID
+        $data['session'] = Mage::getSingleton('core/session')->getEncryptedSessionId();
+        
         $client->setParameterPost($data);
         $client->setAdapter($adapter);
         $client->setHeaders('Api-Key', Mage::helper('recapture')->getApiKey());

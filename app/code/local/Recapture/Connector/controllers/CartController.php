@@ -2,13 +2,6 @@
 
 class Recapture_Connector_CartController extends Mage_Core_Controller_Front_Action {
     
-    public function testAction(){
-    
-        echo 'Api Key: ' . Mage::helper('recapture')->getApiKey() . '<br>';
-        echo 'Enabled: ' . Mage::getStoreConfig('recapture/configuration/enabled') . '<br>';
-    
-    }
-    
     public function indexAction(){
         
         $helper = Mage::helper('recapture');

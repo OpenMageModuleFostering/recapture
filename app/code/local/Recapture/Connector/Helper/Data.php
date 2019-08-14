@@ -2,6 +2,8 @@
 
 class Recapture_Connector_Helper_Data extends Mage_Core_Helper_Abstract {
     
+    private $_registry = array();
+    
     public function isEnabled(){
         
         return Mage::getStoreConfig('recapture/configuration/enabled');
@@ -16,8 +18,11 @@ class Recapture_Connector_Helper_Data extends Mage_Core_Helper_Abstract {
     
     public function getScopeStoreId(){
         
-        $website = Mage::app()->getRequest()->getParam('website') ? Mage::app()->getRequest()->getParam('website') : Mage::getSingleton('adminhtml/config_data')->getWebsite();
-        $store   = Mage::app()->getRequest()->getParam('store') ? Mage::app()->getRequest()->getParam('store') : Mage::getSingleton('adminhtml/config_data')->getStore();
+        $website = Mage::app()->getRequest()->getParam('website');
+        $website = !empty($website) ? $website : Mage::getSingleton('adminhtml/config_data')->getWebsite();
+        
+        $store   = Mage::app()->getRequest()->getParam('store');
+        $store   = !empty($store) ? $store : Mage::getSingleton('adminhtml/config_data')->getStore();
         
         if (!$website && !$store) return '0';
         
@@ -30,8 +35,11 @@ class Recapture_Connector_Helper_Data extends Mage_Core_Helper_Abstract {
     
     public function getCurrentScope(){
         
-        $website = Mage::app()->getRequest()->getParam('website') ? Mage::app()->getRequest()->getParam('website') : Mage::getSingleton('adminhtml/config_data')->getWebsite();
-        $store   = Mage::app()->getRequest()->getParam('store') ? Mage::app()->getRequest()->getParam('store') : Mage::getSingleton('adminhtml/config_data')->getStore();
+        $website = Mage::app()->getRequest()->getParam('website');
+        $website = !empty($website) ? $website : Mage::getSingleton('adminhtml/config_data')->getWebsite();
+        
+        $store   = Mage::app()->getRequest()->getParam('store');
+        $store   = !empty($store) ? $store : Mage::getSingleton('adminhtml/config_data')->getStore();
         
         if (!$website && !$store) return 'default';
         
@@ -42,8 +50,11 @@ class Recapture_Connector_Helper_Data extends Mage_Core_Helper_Abstract {
     
     public function getScopeForUrl(){
         
-        $website = Mage::app()->getRequest()->getParam('website') ? Mage::app()->getRequest()->getParam('website') : Mage::getSingleton('adminhtml/config_data')->getWebsite();
-        $store   = Mage::app()->getRequest()->getParam('store') ? Mage::app()->getRequest()->getParam('store') : Mage::getSingleton('adminhtml/config_data')->getStore();
+        $website = Mage::app()->getRequest()->getParam('website');
+        $website = !empty($website) ? $website : Mage::getSingleton('adminhtml/config_data')->getWebsite();
+        
+        $store   = Mage::app()->getRequest()->getParam('store');
+        $store   = !empty($store) ? $store : Mage::getSingleton('adminhtml/config_data')->getStore();
         
         if (!$website && !$store) return array();
         
@@ -54,8 +65,11 @@ class Recapture_Connector_Helper_Data extends Mage_Core_Helper_Abstract {
     
     public function getCurrentScopeId(){
         
-        $website = Mage::app()->getRequest()->getParam('website') ? Mage::app()->getRequest()->getParam('website') : Mage::getSingleton('adminhtml/config_data')->getWebsite();
-        $store   = Mage::app()->getRequest()->getParam('store') ? Mage::app()->getRequest()->getParam('store') : Mage::getSingleton('adminhtml/config_data')->getStore();
+        $website = Mage::app()->getRequest()->getParam('website');
+        $website = !empty($website) ? $website : Mage::getSingleton('adminhtml/config_data')->getWebsite();
+        
+        $store   = Mage::app()->getRequest()->getParam('store');
+        $store   = !empty($store) ? $store : Mage::getSingleton('adminhtml/config_data')->getStore();
         
         if (!$website && !$store) return 0;
         
@@ -97,6 +111,90 @@ class Recapture_Connector_Helper_Data extends Mage_Core_Helper_Abstract {
         if ($quote->getId() != $cartId) return false;
         
         return true;
+        
+    }
+    
+    public function getCustomerFirstname(Mage_Sales_Model_Quote $quote){
+        
+        //we first check the quote model itself
+        $customerFirstname = $quote->getCustomerFirstname();
+        if (!empty($customerFirstname)) return $customerFirstname;
+        
+        //if not on the quote model, we check the billing address
+        $billingAddress = $quote->getBillingAddress();
+        if ($billingAddress){
+            
+            $customerFirstname = $billingAddress->getFirstname();
+            if (!empty($customerFirstname)) return $customerFirstname;
+            
+        }
+        
+        //if not in the billing address, last resort we check the shipping address
+        $shippingAddress = $quote->getShippingAddress();
+        if ($shippingAddress){
+            
+            $customerFirstname = $shippingAddress->getFirstname();
+            if (!empty($customerFirstname)) return $customerFirstname;
+            
+        }
+        
+        return null;
+        
+    }
+    
+    public function getCustomerLastname(Mage_Sales_Model_Quote $quote){
+        
+        //we first check the quote model itself
+        $customerLastname = $quote->getCustomerLastname();
+        if (!empty($customerLastname)) return $customerLastname;
+        
+        //if not on the quote model, we check the billing address
+        $billingAddress = $quote->getBillingAddress();
+        if ($billingAddress){
+            
+            $customerLastname = $billingAddress->getLastname();
+            if (!empty($customerLastname)) return $customerLastname;
+            
+        }
+        
+        //if not in the billing address, last resort we check the shipping address
+        $shippingAddress = $quote->getShippingAddress();
+        if ($shippingAddress){
+            
+            $customerLastname = $shippingAddress->getLastname();
+            if (!empty($customerLastname)) return $customerLastname;
+            
+        }
+        
+        return null;
+        
+    }
+    
+    public function getCustomerEmail(Mage_Sales_Model_Quote $quote){
+        
+        //we first check the quote model itself
+        $customerEmail = $quote->getCustomerEmail();
+        if (!empty($customerEmail)) return $customerEmail;
+        
+        //if not on the quote model, we check the billing address
+        $billingAddress = $quote->getBillingAddress();
+        if ($billingAddress){
+            
+            $customerEmail = $billingAddress->getEmail();
+            if (!empty($customerEmail)) return $customerEmail;
+            
+        }
+        
+        //if not in the billing address, last resort we check the shipping address
+        $shippingAddress = $quote->getShippingAddress();
+        if ($shippingAddress){
+            
+            $customerEmail = $shippingAddress->getEmail();
+            if (!empty($customerEmail)) return $customerEmail;
+            
+        }
+        
+        return null;
         
     }
     
