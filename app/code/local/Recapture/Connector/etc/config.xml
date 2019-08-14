@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Recapture_Connector>
-            <version>1.1.4</version>
+            <version>1.1.5</version>
         </Recapture_Connector>
     </modules>
 
@@ -57,6 +57,17 @@
                     </recapture_cart_conversion>
                 </observers>
             </sales_order_place_after>
+            
+            <newsletter_subscriber_save_after>
+                <observers>
+                    <recapture_cart_subscriber>
+                        <type>singleton</type>
+                        <class>Recapture_Connector_Model_Observer</class>
+                        <method>newsletterSubscriber</method>
+                    </recapture_cart_subscriber>
+                </observers>
+            </newsletter_subscriber_save_after>
+            
         </events>
         
     </global>

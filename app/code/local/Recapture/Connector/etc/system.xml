@@ -80,7 +80,18 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>When enabled, this will immediately capture typed email addresses anywhere on your site, without requiring the customer to submit any type of form. Useful on checkouts like One Step Checkout.</comment>
                         </track_email>
+                        <capture_subscriber translate="label">
+                            <label>Enable Newsletter Subscription Capturing</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>When enabled, this will capture any emails that are subscribed to your newsletter.</comment>
+                        </capture_subscriber>
                         <return_landing translate="label">
                             <label>Click Through Landing</label>
                             <frontend_type>select</frontend_type>
@@ -89,6 +100,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>0</show_in_store>
                             <source_model>recapture/landing</source_model>
+                            <comment>What page do you want the customer to land on when they click a link in any abandoned cart emails we send?</comment>
                         </return_landing>
                     </fields>
                 </abandoned_carts>

@@ -10,6 +10,12 @@ class Recapture_Connector_Helper_Data extends Mage_Core_Helper_Abstract {
         
     }
     
+    public function shouldCaptureSubscriber(){
+        
+        return Mage::getStoreConfig('recapture/abandoned_carts/capture_subscriber');
+        
+    }
+    
     public function canTrackEmail(){
         
         return Mage::getStoreConfig('recapture/abandoned_carts/track_email');

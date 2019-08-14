@@ -4,13 +4,33 @@ class Recapture_Connector_Model_Observer {
     
     public function itemUpdate($observer){
         
-        return $this->_updateQuote($observer->getEvent()->getQuoteItem()->getQuote());
+        try {
+        
+            $result = $this->_updateQuote($observer->getEvent()->getQuoteItem()->getQuote());
+            
+        } catch (Exception $e){
+            
+            Mage::log($e, null, 'recapture.log');
+            
+        }
+        
+        return $result;
         
     }
     
     public function quoteUpdate($observer){
         
-        return $this->_updateQuote($observer->getEvent()->getQuote());
+        try {
+        
+            $result = $this->_updateQuote($observer->getEvent()->getQuote());
+            
+        } catch (Exception $e){
+            
+            Mage::log($e, null, 'recapture.log');
+            
+        }
+        
+        return $result;
         
     }
     
@@ -135,33 +155,78 @@ class Recapture_Connector_Model_Observer {
 
     public function quoteDelete($observer){
         
-        if (!Mage::helper('recapture')->isEnabled()) return $this;
+        try {
         
-        $quote = $observer->getEvent()->getQuote();
-        
-        $transportData = array(
-            'external_id'  => $quote->getId()
-        );
-        
-        Mage::helper('recapture/transport')->dispatch('cart/remove', $transportData);
-        
+            if (!Mage::helper('recapture')->isEnabled()) return $this;
+            
+            $quote = $observer->getEvent()->getQuote();
+            
+            $transportData = array(
+                'external_id'  => $quote->getId()
+            );
+            
+            Mage::helper('recapture/transport')->dispatch('cart/remove', $transportData);
+            
+        } catch (Exception $e){
+            
+            Mage::log($e, null, 'recapture.log');
+            
+        }
+            
         return $this;
         
     }
     
     public function cartConversion($observer){
         
-        if (!Mage::helper('recapture')->isEnabled()) return $this;
+        try {
         
-        $order = $observer->getEvent()->getOrder();
-        
-        $transportData = array(
-            'external_id'  => $order->getQuoteId()
-        );
-        
-        Mage::helper('recapture/transport')->dispatch('conversion', $transportData);
+            if (!Mage::helper('recapture')->isEnabled()) return $this;
+            
+            $order = $observer->getEvent()->getOrder();
+            
+            $transportData = array(
+                'external_id'  => $order->getQuoteId()
+            );
+            
+            Mage::helper('recapture/transport')->dispatch('conversion', $transportData);
+            
+        } catch (Exception $e){
+            
+            Mage::log($e, null, 'recapture.log');
+            
+        }
         
         return $this;
         
     }
+    
+    public function newsletterSubscriber($observer){
+        
+        try {
+            
+            if (!Mage::helper('recapture')->isEnabled()) return $this;
+            if (!Mage::helper('recapture')->shouldCaptureSubscriber()) return $this;
+            
+            $subscriber = $observer->getEvent()->getSubscriber();
+            $email = $subscriber->getSubscriberEmail();
+            
+            $quote = Mage::getSingleton('checkout/session')->getQuote();
+            $quote->setCustomerEmail($email);
+            $quote->save();
+            
+            //we do this in case the customer didn't have a cart to begin with
+            Mage::helper('recapture')->associateCartToMe($quote->getId());
+            
+        } catch (Exception $e){
+            
+            Mage::log($e, null, 'recapture.log');
+            
+        }
+        
+        return $this;
+        
+        
+    }
+    
 }
