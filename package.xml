@@ -1,20 +1,18 @@
 <?xml version="1.0"?>
 <package>
     <name>recapture</name>
-    <version>1.0.5</version>
+    <version>1.0.6</version>
     <stability>stable</stability>
     <license>OSL</license>
     <channel>community</channel>
     <extends/>
     <summary>Free analytics dashboard for abandoned carts. Set up automated cart recovery email campaigns in minutes.</summary>
     <description>Free analytics dashboard for abandoned carts. Set up automated cart recovery email campaigns in minutes.</description>
-    <notes>Captures correct images for grouped and configurable products.&#xD;
-&#xD;
-Added lots more cool data for campaign segmenting.</notes>
+    <notes>Added multi-site support.</notes>
     <authors><author><name>David Webber</name><user>Adstream</user><email>david@adstreaminc.com</email></author></authors>
-    <date>2015-07-31</date>
-    <time>21:23:01</time>
-    <contents><target name="magelocal"><dir name="Recapture"><dir name="Connector"><dir name="Block"><dir name="Adminhtml"><dir name="System"><dir name="Config"><file name="Authenticate.php" hash="b4def4c279d801f7e9c327d8ee87c414"/><file name="Key.php" hash="adf516740c9e1a392fd7f81c4fb1927e"/><file name="Status.php" hash="003133a47fb37e6f522314778eec9632"/></dir></dir></dir></dir><dir name="controllers"><dir name="Adminhtml"><file name="AuthenticateController.php" hash="0a55323dc217e54be74c91c4b92b6ecc"/></dir><file name="CartController.php" hash="b1a13eaa32a9d6af551b1b73c1573a0d"/><file name="RecaptureController.php" hash="987215ca928935afc9d4f9ce4fdf670c"/></dir><dir name="etc"><file name="config.xml" hash="972e1b80755b47428392e7ab8224bbd2"/><file name="system.xml" hash="12f5cd5932b919ba61f0cb366f252efc"/></dir><dir name="Helper"><file name="Data.php" hash="a8256fffe350a4bd82ba13a9af8ddd54"/><file name="Transport.php" hash="a13bf58b13e207f5260fe2bdbe86fb5e"/></dir><dir name="Model"><file name="Observer.php" hash="d092f076cef50c6b9e91a854e32a3cbf"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Recapture_Connector.xml" hash="e8fea9dc4237af6b34219c7f52bd02d8"/></dir></target></contents>
+    <date>2015-08-03</date>
+    <time>20:04:37</time>
+    <contents><target name="magelocal"><dir name="Recapture"><dir name="Connector"><dir name="Block"><dir name="Adminhtml"><dir name="System"><dir name="Config"><file name="Authenticate.php" hash="2433544256c447f96d1e4b4a823e724a"/><file name="Key.php" hash="adf516740c9e1a392fd7f81c4fb1927e"/><file name="Status.php" hash="f19858c8bb476b05e7e86cbdce403323"/></dir></dir></dir></dir><dir name="controllers"><dir name="Adminhtml"><file name="AuthenticateController.php" hash="99e88ec23f679320e9d1aa62101ecd2e"/></dir><file name="CartController.php" hash="b1a13eaa32a9d6af551b1b73c1573a0d"/><file name="RecaptureController.php" hash="987215ca928935afc9d4f9ce4fdf670c"/></dir><dir name="etc"><file name="config.xml" hash="972e1b80755b47428392e7ab8224bbd2"/><file name="system.xml" hash="12f5cd5932b919ba61f0cb366f252efc"/></dir><dir name="Helper"><file name="Data.php" hash="75303b11410e45bca05e1a70b5ef3ab2"/><file name="Transport.php" hash="a13bf58b13e207f5260fe2bdbe86fb5e"/></dir><dir name="Model"><file name="Observer.php" hash="d092f076cef50c6b9e91a854e32a3cbf"/></dir></dir></dir></target><target name="mageetc"><dir name="modules"><file name="Recapture_Connector.xml" hash="e8fea9dc4237af6b34219c7f52bd02d8"/></dir></target></contents>
     <compatible/>
     <dependencies><required><php><min>5.1.0</min><max>6.0.0</max></php></required></dependencies>
 </package>

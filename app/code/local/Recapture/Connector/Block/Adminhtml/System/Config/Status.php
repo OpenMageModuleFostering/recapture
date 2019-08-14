@@ -4,7 +4,7 @@ class Recapture_Connector_Block_Adminhtml_System_Config_Status extends Mage_Admi
     
     protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) {
         
-        $authenticated = Mage::getStoreConfig('recapture/configuration/authenticated');
+        $authenticated = Mage::getStoreConfig('recapture/configuration/authenticated', Mage::helper('recapture')->getScopeStoreId());
         
         $image = $this->getSkinUrl('images/' . ($authenticated ? 'success' : 'error') . '_msg_icon.gif');
         $text = '<img style="float: left; margin-right: 6px;" src="' . $image . '" /> ';

@@ -14,6 +14,56 @@ class Recapture_Connector_Helper_Data extends Mage_Core_Helper_Abstract {
         
     }
     
+    public function getScopeStoreId(){
+        
+        $website = Mage::app()->getRequest()->getParam('website') ? Mage::app()->getRequest()->getParam('website') : Mage::getSingleton('adminhtml/config_data')->getWebsite();
+        $store   = Mage::app()->getRequest()->getParam('store') ? Mage::app()->getRequest()->getParam('store') : Mage::getSingleton('adminhtml/config_data')->getStore();
+        
+        if (!$website && !$store) return '0';
+        
+        if ($store) return Mage::getModel('core/store')->load($store)->getId();
+        if ($website) return Mage::getModel('core/website')->load($website)->getDefaultGroup()->getDefaultStoreId();
+        
+        
+        
+    }
+    
+    public function getCurrentScope(){
+        
+        $website = Mage::app()->getRequest()->getParam('website') ? Mage::app()->getRequest()->getParam('website') : Mage::getSingleton('adminhtml/config_data')->getWebsite();
+        $store   = Mage::app()->getRequest()->getParam('store') ? Mage::app()->getRequest()->getParam('store') : Mage::getSingleton('adminhtml/config_data')->getStore();
+        
+        if (!$website && !$store) return 'default';
+        
+        if ($store) return 'stores';
+        if ($website) return 'websites';
+        
+    }
+    
+    public function getScopeForUrl(){
+        
+        $website = Mage::app()->getRequest()->getParam('website') ? Mage::app()->getRequest()->getParam('website') : Mage::getSingleton('adminhtml/config_data')->getWebsite();
+        $store   = Mage::app()->getRequest()->getParam('store') ? Mage::app()->getRequest()->getParam('store') : Mage::getSingleton('adminhtml/config_data')->getStore();
+        
+        if (!$website && !$store) return array();
+        
+        if ($store) return array('website' => $website, 'store' => $store);
+        if ($website) return array('website' => $website);
+        
+    }
+    
+    public function getCurrentScopeId(){
+        
+        $website = Mage::app()->getRequest()->getParam('website') ? Mage::app()->getRequest()->getParam('website') : Mage::getSingleton('adminhtml/config_data')->getWebsite();
+        $store   = Mage::app()->getRequest()->getParam('store') ? Mage::app()->getRequest()->getParam('store') : Mage::getSingleton('adminhtml/config_data')->getStore();
+        
+        if (!$website && !$store) return 0;
+        
+        if ($store) return Mage::getModel('core/store')->load($store)->getId();
+        if ($website) return Mage::getModel('core/website')->load($website)->getId();
+        
+    }
+    
     public function translateCartHash($hash = ''){
         
         if (empty($hash)) return false;
