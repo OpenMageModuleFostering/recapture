@@ -37,11 +37,14 @@ class Recapture_Connector_Model_Observer {
         $storeId     = Mage::app()->getStore();
 
         $totalWithTax = Mage::getStoreConfig('recapture/abandoned_carts/include_tax_with_products');
+    
+        $customerGroup = Mage::getModel('customer/group')->load($quote->getCustomerGroupId());
 
         $transportData = array(
             'first_name'          => Mage::helper('recapture')->getCustomerFirstname($quote),
             'last_name'           => Mage::helper('recapture')->getCustomerLastname($quote),
             'email'               => Mage::helper('recapture')->getCustomerEmail($quote),
+            'customer_group'      => $customerGroup->getCustomerGroupCode(),
             'external_id'         => $quote->getId(),
             'grand_total'         => $quote->getBaseGrandTotal(),
             'grand_total_display' => Mage::helper('core')->currency($quote->getGrandTotal(), true, false),
