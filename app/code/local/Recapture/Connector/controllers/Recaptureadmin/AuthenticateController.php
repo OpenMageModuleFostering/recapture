@@ -1,6 +1,6 @@
 <?php
 
-class Recapture_Connector_Adminhtml_AuthenticateController extends Mage_Adminhtml_Controller_Action {
+class Recapture_Connector_Recaptureadmin_AuthenticateController extends Mage_Adminhtml_Controller_Action {
     
     public function indexAction(){
         
@@ -14,11 +14,11 @@ class Recapture_Connector_Adminhtml_AuthenticateController extends Mage_Adminhtm
         
         $scope = Mage::helper('recapture')->getScopeForUrl();
         
-        $returnCancel = Mage::helper('adminhtml')->getUrl('recapture_admin/authenticate/cancel', $scope);
+        $returnCancel = Mage::helper('adminhtml')->getUrl('adminhtml/recaptureadmin_authenticate/cancel', $scope);
         
         $scope['response_key'] = 'API_KEY';
         
-        $returnConfirm = Mage::helper('adminhtml')->getUrl('recapture_admin/authenticate/return', $scope);
+        $returnConfirm = Mage::helper('adminhtml')->getUrl('adminhtml/recaptureadmin_authenticate/return', $scope);
         $recaptureUrl  = Mage::getUrl('recapture/cart/index', array('hash' => 'CART_HASH', '_store' => Mage::helper('recapture')->getScopeStoreId()));
         
         $query = http_build_query(array(
@@ -27,7 +27,7 @@ class Recapture_Connector_Adminhtml_AuthenticateController extends Mage_Adminhtm
             'recapture'     => $recaptureUrl
         ));
         
-        $authenticateUrl = 'http://recapture.io/account/auth?' . $query;
+        $authenticateUrl = 'https://recapture.io/account/auth?' . $query;
         return $this->_redirectUrl($authenticateUrl);
         
     }

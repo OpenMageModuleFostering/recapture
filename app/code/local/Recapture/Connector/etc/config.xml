@@ -2,7 +2,7 @@
 <config>
     <modules>
         <Recapture_Connector>
-            <version>1.1.3</version>
+            <version>1.1.4</version>
         </Recapture_Connector>
     </modules>
 
@@ -82,13 +82,13 @@
     
     <admin>
          <routers>
-             <recapture_admin>
-                 <use>admin</use>
+             <adminhtml>
                  <args>
-                     <module>Recapture_Connector_Adminhtml</module>
-                     <frontName>recapture_admin</frontName>
+                    <modules>
+                        <recaptureadmin after="Mage_Adminhtml">Recapture_Connector</recaptureadmin>
+                    </modules>
                  </args>
-             </recapture_admin>
+             </adminhtml>
          </routers>
     </admin>
     

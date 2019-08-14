@@ -8,7 +8,7 @@ implements Varien_Data_Form_Element_Renderer_Interface {
 
         $data = array(
             'label'     => Mage::helper('adminhtml')->__('Authenticate Account'),
-            'onclick'   => 'setLocation(\''.Mage::helper('adminhtml')->getUrl("recapture_admin/authenticate", Mage::helper('recapture')->getScopeForUrl()) . '\' )',
+            'onclick'   => 'setLocation(\''.Mage::helper('adminhtml')->getUrl("adminhtml/recaptureadmin_authenticate", Mage::helper('recapture')->getScopeForUrl()) . '\' )',
             'class'     => '',
         );
 
