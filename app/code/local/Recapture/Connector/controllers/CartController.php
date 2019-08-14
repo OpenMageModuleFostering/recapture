@@ -12,6 +12,7 @@ class Recapture_Connector_CartController extends Mage_Core_Controller_Front_Acti
     public function indexAction(){
         
         $helper = Mage::helper('recapture');
+        if (!$helper->isEnabled() || !$helper->getApiKey()) return $this->_redirect('/');
         
         $hash = $this->getRequest()->getParam('hash');
         

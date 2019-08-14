@@ -25,7 +25,12 @@ class Recapture_Connector_Model_Observer {
         
         Mage::register('recapture_has_posted', true);
         
+        $mediaConfig = Mage::getModel('catalog/product_media_config');
+        $storeId     = Mage::app()->getStore();
+        
         $transportData = array(
+            'first_name'   => $quote->getCustomerFirstname(),
+            'last_name'    => $quote->getCustomerLastname(),
             'email'        => $quote->getCustomerEmail(),
             'external_id'  => $quote->getId(),
             'grand_total'  => $quote->getGrandTotal(),
@@ -37,12 +42,58 @@ class Recapture_Connector_Model_Observer {
         
         foreach ($cartItems as $item){
             
+            $productModel = $item->getProduct();
+            
+            $productImage = (string)Mage::helper('catalog/image')->init($productModel, 'thumbnail');
+            
+            //check configurable first
+            if ($item->getProductType() == 'configurable'){
+                
+                if (Mage::getStoreConfig('checkout/cart/configurable_product_image') == 'itself'){
+                
+                    $child = $productModel->getIdBySku($item->getSku());
+                    
+                    $image = Mage::getResourceModel('catalog/product')->getAttributeRawValue($child, 'thumbnail', $storeId);
+                    
+                    if ($image) $productImage = $mediaConfig->getMediaUrl($image);
+                    
+                }
+            }
+            
+            //then check grouped
+            if (Mage::getStoreConfig('checkout/cart/grouped_product_image') == 'parent'){
+                
+                $options = $productModel->getTypeInstance(true)->getOrderOptions($productModel);
+                
+                if (isset($options['super_product_config']) && $options['super_product_config']['product_type'] == 'grouped'){
+                    
+                    $parent = $options['super_product_config']['product_id'];
+                    $image = Mage::getResourceModel('catalog/product')->getAttributeRawValue($parent, 'thumbnail', $storeId);
+                    
+                    $productImage = $mediaConfig->getMediaUrl($image);
+                    
+                }
+            }
+            
+            $optionsHelper = Mage::helper('catalog/product_configuration');
+            
+            if ($item->getProductType() == 'configurable'){
+                
+                $visibleOptions = $optionsHelper->getConfigurableOptions($item);
+                
+            } else {
+                
+                $visibleOptions = $optionsHelper->getCustomOptions($item);
+                
+            }
+            
             $product = array(
-                'name'  => $item->getName(),
-                'sku'   => $item->getSku(),
-                'price' => $item->getPrice(),
-                'qty'   => $item->getQty(),
-                'image' => (string)Mage::helper('catalog/image')->init($item->getProduct(), 'thumbnail')
+                'name'    => $item->getName(),
+                'sku'     => $item->getSku(),
+                'price'   => $item->getPrice(),
+                'qty'     => $item->getQty(),
+                'image'   => $productImage,
+                'options' => $visibleOptions
             );
             
             $transportData['products'][] = $product;
