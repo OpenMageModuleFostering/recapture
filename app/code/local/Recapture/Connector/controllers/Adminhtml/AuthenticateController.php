@@ -5,7 +5,7 @@ class Recapture_Connector_Adminhtml_AuthenticateController extends Mage_Adminhtm
     public function indexAction(){
         
         $query = http_build_query(array(
-            'return'    => Mage::helper('adminhtml')->getUrl('recapture_admin/authenticate/return'),
+            'return'    => Mage::helper('adminhtml')->getUrl('recapture_admin/authenticate/return', array('response_key' => 'API_KEY')),
             'recapture' => Mage::getUrl('recapture/cart/index', array('hash' => 'CART_HASH'))
         ));
         
@@ -16,7 +16,7 @@ class Recapture_Connector_Adminhtml_AuthenticateController extends Mage_Adminhtm
     
     public function returnAction(){
         
-        $apiKey = $this->getRequest()->getParam('api_key');
+        $apiKey = $this->getRequest()->getParam('response_key');
         
         if ($apiKey){
         
