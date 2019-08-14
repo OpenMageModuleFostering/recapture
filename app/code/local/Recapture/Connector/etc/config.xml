@@ -132,6 +132,7 @@
         <recapture>
             <abandoned_carts>
                 <return_landing>cart</return_landing>
+                <include_tax_with_products>0</include_tax_with_products>
             </abandoned_carts>
         </recapture>
     </default>

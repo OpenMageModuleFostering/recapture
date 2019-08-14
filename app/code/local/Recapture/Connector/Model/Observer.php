@@ -50,6 +50,8 @@ class Recapture_Connector_Model_Observer {
         $mediaConfig = Mage::getModel('catalog/product_media_config');
         $storeId     = Mage::app()->getStore();
         
+        $totalWithTax = Mage::getStoreConfig('recapture/abandoned_carts/include_tax_with_products');
+        
         $transportData = array(
             'first_name'   => Mage::helper('recapture')->getCustomerFirstname($quote),
             'last_name'    => Mage::helper('recapture')->getCustomerLastname($quote),
@@ -121,7 +123,7 @@ class Recapture_Connector_Model_Observer {
             $product = array(
                 'name'    => $item->getName(),
                 'sku'     => $item->getSku(),
-                'price'   => $item->getPrice(),
+                'price'   => $totalWithTax ? $item->getPriceInclTax() : $item->getPrice(),
                 'qty'     => $item->getQty(),
                 'image'   => $productImage,
                 'options' => $visibleOptions

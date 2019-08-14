@@ -102,6 +102,16 @@
                             <source_model>recapture/landing</source_model>
                             <comment>What page do you want the customer to land on when they click a link in any abandoned cart emails we send?</comment>
                         </return_landing>
+                        <include_tax_with_products translate="label">
+                            <label>Include Tax with Product Totals</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <comment>Whether not to include tax in the product total.</comment>
+                        </include_tax_with_products>
                     </fields>
                 </abandoned_carts>
             </groups>
