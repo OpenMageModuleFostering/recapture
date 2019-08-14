@@ -10,6 +10,25 @@ class Recapture_Connector_Helper_Data extends Mage_Core_Helper_Abstract {
         
     }
     
+    public function isIpIgnored(){
+        
+        $ips = Mage::getStoreConfig('recapture/abandoned_carts/ignore_ips');
+        $exploded = explode(',', $ips);
+        
+        foreach ($exploded as $ip){
+            
+            $ip = trim($ip);
+            
+            if ($ip == Mage::helper('core/http')->getRemoteAddr()){
+                return true;
+            }
+            
+        }
+        
+        return false;
+        
+    }
+    
     public function shouldCaptureSubscriber(){
         
         return Mage::getStoreConfig('recapture/abandoned_carts/capture_subscriber');

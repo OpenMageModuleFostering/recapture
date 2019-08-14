@@ -112,6 +112,17 @@
                             <source_model>adminhtml/system_config_source_yesno</source_model>
                             <comment>Whether or not to include tax in the product total.</comment>
                         </include_tax_with_products>
+                        
+                        <ignore_ips translate="label">
+                            <label>Bot IP Addresses</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>recapture/adminhtml_system_config_key</frontend_model>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment>Activity will not be recorded for these IP addresses. Useful if you have a bot that tests your checkout on a scheduled basis. Multiple IP addresses must be comma separated.</comment>
+                        </ignore_ips>
                     </fields>
                 </abandoned_carts>
             </groups>

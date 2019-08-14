@@ -31,6 +31,8 @@ class Recapture_Connector_Model_Observer {
 
         Mage::register('recapture_has_posted', true);
         
+        if (Mage::helper('recapture')->isIpIgnored()) return $this;
+        
         $mediaConfig = Mage::getModel('catalog/product_media_config');
         $storeId     = Mage::app()->getStore();
 
