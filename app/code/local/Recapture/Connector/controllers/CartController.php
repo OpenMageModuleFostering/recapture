@@ -2,33 +2,56 @@
 
 class Recapture_Connector_CartController extends Mage_Core_Controller_Front_Action {
     
+    public function testAction(){
+    
+        echo 'Api Key: ' . Mage::helper('recapture')->getApiKey() . '<br>';
+        echo 'Enabled: ' . Mage::getStoreConfig('recapture/configuration/enabled') . '<br>';
+    
+    }
+    
     public function indexAction(){
         
         $helper = Mage::helper('recapture');
         
         $hash = $this->getRequest()->getParam('hash');
         
-        $cartId = $helper->translateCartHash($hash);
+        try {
+        
+            $cartId = $helper->translateCartHash($hash);
+            
+        } catch (Exception $e){
+            
+            Mage::log($e, null, 'recapture.log');
+            
+        }
         
         if (!$cartId){
             
             Mage::getSingleton('core/session')->addError('There was an error retrieving your cart.');
-            $this->_redirect('/');
+            return $this->_redirect('/');
             
         }
         
-        $result = $helper->associateCartToMe($cartId);
+        try {
+        
+            $result = $helper->associateCartToMe($cartId);
+            
+        } catch (Exception $e){
+            
+            Mage::log($e, null, 'recapture.log');
+            
+        }
         
         if (!$result){
             
             Mage::getSingleton('core/session')->addError('There was an error retrieving your cart.');
-            $this->_redirect('/');
+            return $this->_redirect('/');
             
         } else {
             
             $cart = Mage::getModel('checkout/cart')->getQuote();
             
-            $this->_redirect('checkout/cart');
+            return $this->_redirect('checkout/cart');
             
         }
         

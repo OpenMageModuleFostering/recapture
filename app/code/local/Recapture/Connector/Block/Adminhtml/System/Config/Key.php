@@ -4,7 +4,6 @@ class Recapture_Connector_Block_Adminhtml_System_Config_Key extends Mage_Adminht
     
     protected function _getElementHtml(Varien_Data_Form_Element_Abstract $element) {
         
-        $element->setDisabled('disabled');
         return parent::_getElementHtml($element);
         
     }
