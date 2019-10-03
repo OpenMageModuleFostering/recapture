@@ -1,7 +1,7 @@
 {
-    "name": "OpenMageModuleFostering\/recapture",
+    "name": "openmage-module-fostering\/recapture",
     "type": "magento-module",
-    "license": "OSL",
+    "license": "OSL-3.0",
     "homepage": "",
     "description": "Free analytics dashboard for abandoned carts. Set up automated cart recovery email campaigns in minutes.",
     "authors": [
